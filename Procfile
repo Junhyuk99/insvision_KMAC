@@ -1,1 +1,1 @@
-web: voila final_all_indi_week_share.ipynb --port=$PORT --no-browser --strip-source
+web: voila final_all_indi_week_share.ipynb:server --port=$PORT --no-browser --strip-source
