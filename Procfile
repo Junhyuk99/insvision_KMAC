@@ -1,1 +1,1 @@
-web: voila final_all_indi_week_share.ipynb:server --port=$PORT --no-browser --strip-source
+web: gunicorn final_all_indi_week_share2:server
