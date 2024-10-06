@@ -1,0 +1,8 @@
+voila
+pandas
+numpy
+dash
+plotly.express
+requests
+certifi
+xml.etree.ElementTree

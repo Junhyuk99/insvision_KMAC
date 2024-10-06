@@ -1,0 +1,1 @@
+web: voila final_all_indi_week.ipynb --port=$PORT --no-browser --strip-source
