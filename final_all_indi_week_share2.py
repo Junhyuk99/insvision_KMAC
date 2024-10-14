@@ -216,7 +216,7 @@ fig3.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -292,7 +292,7 @@ fig4.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals2_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -508,7 +508,7 @@ fig7.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -586,7 +586,7 @@ fig8.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -795,7 +795,7 @@ fig11.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -871,7 +871,7 @@ fig12.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals2_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -1087,7 +1087,7 @@ fig15.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
@@ -1165,7 +1165,7 @@ fig16.update_layout(
         showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
-        tickmode='array',  # 수동으로 tick 설정
+        tickmode='auto',  # 수동으로 tick 설정
         # tickvals=tickvals1_change,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
