@@ -519,7 +519,7 @@ fig7.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -527,6 +527,7 @@ fig7.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig7.update_yaxes(ticksuffix="%")
 
 '''8번그래프 : 매매가격지수 등락률 고양시 지역구별 6대광역시 비교'''
 # 전월 대비 등락률 계산
@@ -597,7 +598,7 @@ fig8.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -605,6 +606,7 @@ fig8.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig8.update_yaxes(ticksuffix="%")
 
 '''9번그래프 : 전세가격지수 고양시 전국 비교'''
 
@@ -806,7 +808,7 @@ fig11.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -814,6 +816,7 @@ fig11.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig11.update_yaxes(ticksuffix="%")
 
 '''12번그래프 : 전세가격지수 등락률 고양시 6대광역시 비교'''
 # 전월 대비 등락률 계산
@@ -882,7 +885,7 @@ fig12.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -890,6 +893,7 @@ fig12.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig12.update_yaxes(ticksuffix="%")
 
 '''13번그래프 : 전세가격지수 고양시 지역구별 전국 비교'''
 
@@ -1098,7 +1102,7 @@ fig15.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -1106,6 +1110,7 @@ fig15.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig15.update_yaxes(ticksuffix="%")
 
 '''16번그래프 : 전세가격지수 등락률 고양시 지역구별 6대광역시 비교'''
 # 전월 대비 등락률 계산
@@ -1176,7 +1181,7 @@ fig16.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -1184,6 +1189,7 @@ fig16.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig16.update_yaxes(ticksuffix="%")
 
 # Dash 애플리케이션 초기화
 app = dash.Dash(__name__)
