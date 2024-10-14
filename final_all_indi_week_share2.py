@@ -1190,7 +1190,7 @@ server = app.server
 # 레이아웃 정의
 app.layout = html.Div([
     dcc.Graph(id='line-chart', figure=fig1),
-    dcc.Interval(id='graph-interval', interval=3000, n_intervals=0)  # 5초 간격
+    dcc.Interval(id='graph-interval', interval=4000, n_intervals=0)  # 5초 간격
 ])
 
 # 콜백 함수 정의
