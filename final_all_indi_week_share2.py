@@ -225,7 +225,7 @@ fig3.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2r%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -233,6 +233,7 @@ fig3.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig3.update_yaxes(ticksuffix="%")
 
 '''4번그래프 : 아파트 매매가격지수 등락률 고양시 6대광역시 비교'''
 # 전월 대비 등락률 계산
@@ -301,7 +302,7 @@ fig4.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2r%",
+        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -309,6 +310,7 @@ fig4.update_layout(
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
 )
+fig4.update_yaxes(ticksuffix="%")
 
 '''5번그래프 : 매매가격지수 고양시 지역구별 전국 비교'''
 
