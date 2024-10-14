@@ -225,7 +225,6 @@ fig3.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2f",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -302,8 +301,7 @@ fig4.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
-        tickformat=".2f",
-    ),
+        ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
