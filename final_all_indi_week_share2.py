@@ -225,6 +225,7 @@ fig3.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -300,6 +301,7 @@ fig4.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -515,6 +517,7 @@ fig7.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -592,6 +595,7 @@ fig8.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -800,6 +804,7 @@ fig11.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -875,6 +880,7 @@ fig12.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -1090,6 +1096,7 @@ fig15.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -1167,6 +1174,7 @@ fig16.update_layout(
         zeroline=True,  # 0에서 가로선 표시
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
+        tickformat="%",
     ),
     width=750,  # 그래프 너비
     height=500,  # 그래프 높이
@@ -1182,9 +1190,8 @@ server = app.server
 # 레이아웃 정의
 app.layout = html.Div([
     dcc.Graph(id='line-chart', figure=fig1),
-    dcc.Interval(id='graph-interval', interval=2500, n_intervals=0)  # 간격
+    dcc.Interval(id='graph-interval', interval=3000, n_intervals=0)  # 5초 간격
 ])
-
 
 # 콜백 함수 정의
 @app.callback(
@@ -1192,35 +1199,11 @@ app.layout = html.Div([
     Input('graph-interval', 'n_intervals')
 )
 def update_graph(n):
-    # 그래프 목록
-    figures_with_animation = [fig1, fig2, fig5, fig6, fig9, fig10, fig13, fig14]  # 애니메이션 적용할 그래프들
-    # figures_with_animation2 = [fig9, fig10, fig13, fig14]  # 애니메이션 적용할 그래프들
-    figures_without_animation = [fig3, fig4, fig7, fig8, fig11, fig12, fig15, fig16]  # 애니메이션 적용 안할 그래프들
-    # figures_without_animation2 = [fig11, fig12]  # 애니메이션 적용 안할 그래프들
+    # 3개의 그래프를 순환
+    figures = [fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12, fig13, fig14, fig15, fig16]
+    return figures[n % len(figures)]
 
-    # 전체 그래프 순환
-    figures = figures_with_animation + figures_without_animation
-    selected_fig = figures[n % len(figures)]
-
-    # 선택된 그래프에 애니메이션 트랜지션 추가 (애니메이션 적용할 그래프만)
-    if selected_fig in figures_with_animation:
-        selected_fig.update_layout(
-            transition={'duration': 1000, 'easing': 'linear'}
-        )
-    # elif selected_fig in figures_with_animation2:
-    #     selected_fig.update_layout(
-    #         transition={'duration': 1000, 'easing': 'linear'}
-    #     )
-    else:
-        # 애니메이션 없는 경우에는 트랜지션을 초기화 (혹은 무시)
-        selected_fig.update_layout(
-            transition={'duration': 0}  # 트랜지션 없이 즉시 변경
-        )
-
-    return selected_fig
-
-
-#애플리케이션 실행
+# 애플리케이션 실행
 if __name__ == '__main__':
     app.run_server(debug=True)
 
@@ -1230,3 +1213,6 @@ if __name__ == '__main__':
 # '일산서구': '#90EE90',
 # '6대광역시': '#FFB6C1',
 # '전국': '#FFB6C1',
+
+# 등락률 %표기
+# 애니메이션 삭제, 그래프별 3초
