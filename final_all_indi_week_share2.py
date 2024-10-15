@@ -25,7 +25,31 @@ filtered_data6 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광�
 filtered_data7 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['전국', '덕양구', '일산동구', '일산서구'])]
 filtered_data8 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광역시', '덕양구', '일산동구', '일산서구'])]
 
+def convert_to_year_week(week_code):
+    year = int(week_code[:4])
+    week = int(week_code[4:])
+    return f'{year}년 {week}주차'
+
+filtered_data1['WRTTIME_IDTFR_ID'] = filtered_data1['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data1['formatted_week'] = filtered_data1['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data2['WRTTIME_IDTFR_ID'] = filtered_data2['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data2['formatted_week'] = filtered_data2['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data3['WRTTIME_IDTFR_ID'] = filtered_data3['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data3['formatted_week'] = filtered_data3['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data4['WRTTIME_IDTFR_ID'] = filtered_data4['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data4['formatted_week'] = filtered_data4['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data5['WRTTIME_IDTFR_ID'] = filtered_data5['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data5['formatted_week'] = filtered_data5['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data6['WRTTIME_IDTFR_ID'] = filtered_data6['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data6['formatted_week'] = filtered_data6['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data7['WRTTIME_IDTFR_ID'] = filtered_data7['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data7['formatted_week'] = filtered_data7['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data8['WRTTIME_IDTFR_ID'] = filtered_data8['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data8['formatted_week'] = filtered_data8['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+
 '''1번그래프 : 매매가격지수 고양시 전국 비교'''
+
+
 
 # y축 최솟값과 최댓값 계산
 y_min1 = filtered_data1['DTA_VAL'].min()
@@ -35,7 +59,7 @@ y_max_with_margin1 = y_max1 + (y_max1 * 0.01)
 
 # Plotly 그래프 생성
 fig1 = px.line(filtered_data1,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
@@ -69,9 +93,11 @@ fig1.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -81,15 +107,30 @@ fig1.update_layout(
         tickmode='array',  # 수동으로 tick 설정
         tickvals=tickvals1,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
-        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색 점선
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
         gridwidth=1,
         range=[y_min_with_margin1, y_max_with_margin1]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''2번그래프 : 매매가격지수 고양시 6대광역시 비교'''
@@ -101,7 +142,7 @@ y_max_with_margin2 = y_max2 + (y_max2 * 0.008)
 
 # Plotly 그래프 생성
 fig2 = px.line(filtered_data2,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
@@ -135,9 +176,11 @@ fig2.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -151,11 +194,26 @@ fig2.update_layout(
         gridwidth=1,
         range=[y_min_with_margin2, y_max_with_margin2]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''3번그래프 : 매매가격지수 등락률 고양시 전국 비교'''
@@ -173,7 +231,7 @@ y_max_with_margin1_change = y_max1_change + (abs(y_max1_change) * 1)
 
 # Plotly 그래프 생성
 fig3 = px.line(filtered_data1_change,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
@@ -207,10 +265,12 @@ fig3.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
-    ),
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
+        ),
     yaxis=dict(
         showline=True,
         showticklabels=True,
@@ -226,11 +286,26 @@ fig3.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig3.update_yaxes(ticksuffix="%")
 
@@ -249,7 +324,7 @@ y_max_with_margin2_change = y_max2_change + (abs(y_max2_change) * 1)
 
 # Plotly 그래프 생성
 fig4 = px.line(filtered_data2_change,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
@@ -283,9 +358,11 @@ fig4.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -302,11 +379,26 @@ fig4.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
         ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig4.update_yaxes(ticksuffix="%")
 
@@ -320,7 +412,7 @@ y_max_with_margin5 = y_max5 + (y_max5 * 0.01)
 
 # Plotly 그래프 생성
 fig5 = px.line(filtered_data3,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
@@ -356,9 +448,11 @@ fig5.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -372,11 +466,26 @@ fig5.update_layout(
         gridwidth=1,
         range=[y_min_with_margin5, y_max_with_margin5]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''6번그래프 : 매매가격지수 고양시 지역구별 6대광역시 비교'''
@@ -389,7 +498,7 @@ y_max_with_margin6 = y_max6 + (y_max6 * 0.01)
 
 # Plotly 그래프 생성
 fig6 = px.line(filtered_data4,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
@@ -425,9 +534,11 @@ fig6.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -441,11 +552,26 @@ fig6.update_layout(
         gridwidth=1,
         range=[y_min_with_margin6, y_max_with_margin6]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''7번그래프 : 매매가격지수 등락률 고양시 지역구별 전국 비교'''
@@ -463,7 +589,7 @@ y_max_with_margin3_change = y_max3_change + (abs(y_max3_change) * 1)
 
 # Plotly 그래프 생성
 fig7 = px.line(filtered_data3_change,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
@@ -499,9 +625,11 @@ fig7.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -518,11 +646,26 @@ fig7.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig7.update_yaxes(ticksuffix="%")
 
@@ -541,7 +684,7 @@ y_max_with_margin4_change = y_max4_change + (abs(y_max4_change) * 1)
 
 # Plotly 그래프 생성
 fig8 = px.line(filtered_data4_change,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
@@ -577,9 +720,11 @@ fig8.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -596,11 +741,26 @@ fig8.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig8.update_yaxes(ticksuffix="%")
 
@@ -614,7 +774,7 @@ y_max_with_margin9 = y_max9 + (y_max9 * 0.01)
 
 # Plotly 그래프 생성
 fig9 = px.line(filtered_data5,
-               x='WRTTIME_IDTFR_ID',
+               x='formatted_week',
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
@@ -648,9 +808,11 @@ fig9.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -664,11 +826,26 @@ fig9.update_layout(
         gridwidth=1,
         range=[y_min_with_margin9, y_max_with_margin9]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''10번그래프 : 전세가격지수 고양시 6대광역시 비교'''
@@ -680,7 +857,7 @@ y_max_with_margin10 = y_max10 + (y_max10 * 0.008)
 
 # Plotly 그래프 생성
 fig10 = px.line(filtered_data6,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='DTA_VAL',
                 color='CLS_NM',
                 color_discrete_map={
@@ -714,9 +891,11 @@ fig10.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -730,11 +909,26 @@ fig10.update_layout(
         gridwidth=1,
         range=[y_min_with_margin10, y_max_with_margin10]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''11번그래프 : 전세가격지수 등락률 고양시 전국 비교'''
@@ -752,7 +946,7 @@ y_max_with_margin5_change = y_max5_change + 0.1
 
 # Plotly 그래프 생성
 fig11 = px.line(filtered_data5_change,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
@@ -786,9 +980,11 @@ fig11.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -805,11 +1001,26 @@ fig11.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig11.update_yaxes(ticksuffix="%")
 
@@ -828,7 +1039,7 @@ y_max_with_margin6_change = y_max6_change + 0.1
 
 # Plotly 그래프 생성
 fig12 = px.line(filtered_data6_change,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
@@ -862,9 +1073,11 @@ fig12.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -881,11 +1094,26 @@ fig12.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig12.update_yaxes(ticksuffix="%")
 
@@ -899,7 +1127,7 @@ y_max_with_margin13 = y_max13 + (y_max13 * 0.01)
 
 # Plotly 그래프 생성
 fig13 = px.line(filtered_data7,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='DTA_VAL',
                 color='CLS_NM',
                 color_discrete_map={
@@ -935,9 +1163,11 @@ fig13.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -951,11 +1181,26 @@ fig13.update_layout(
         gridwidth=1,
         range=[y_min_with_margin13, y_max_with_margin13]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''14번그래프 : 전세가격지수 고양시 지역구별 6대광역시 비교'''
@@ -968,7 +1213,7 @@ y_max_with_margin14 = y_max14 + (y_max14 * 0.01)
 
 # Plotly 그래프 생성
 fig14 = px.line(filtered_data8,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='DTA_VAL',
                 color='CLS_NM',
                 color_discrete_map={
@@ -1004,9 +1249,11 @@ fig14.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -1020,11 +1267,26 @@ fig14.update_layout(
         gridwidth=1,
         range=[y_min_with_margin14, y_max_with_margin14]  # y축의 최솟값과 최댓값에 마진 추가
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 
 '''15번그래프 : 전세가격지수 등락률 고양시 지역구별 전국 비교'''
@@ -1042,7 +1304,7 @@ y_max_with_margin7_change = y_max7_change + 0.15
 
 # Plotly 그래프 생성
 fig15 = px.line(filtered_data7_change,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
@@ -1078,9 +1340,11 @@ fig15.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -1097,11 +1361,26 @@ fig15.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig15.update_yaxes(ticksuffix="%")
 
@@ -1120,7 +1399,7 @@ y_max_with_margin8_change = y_max8_change + 0.15
 
 # Plotly 그래프 생성
 fig16 = px.line(filtered_data8_change,
-                x='WRTTIME_IDTFR_ID',
+                x='formatted_week',
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
@@ -1156,9 +1435,11 @@ fig16.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=False,
+        showticklabels=True,
+        tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
-        showgrid=False,  # 세로선
+        showgrid=True,  # 세로선 표시
+        gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
     ),
     yaxis=dict(
         showline=True,
@@ -1175,11 +1456,26 @@ fig16.update_layout(
         zerolinecolor='rgba(200, 200, 200, 0.5)',  # 0선의 색상
         zerolinewidth=3,  # 0선의 두께
     ),
-    width=750,  # 그래프 너비
-    height=500,  # 그래프 높이
+    width=1120,  # 그래프 너비 (16:9 비율로 설정)
+    height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
+    xaxis_tickformat='%Y년%주차',
+    xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="gray")  # 작은 회색 글씨로 표시
+        )
+    ]
 )
 fig16.update_yaxes(ticksuffix="%")
 
@@ -1190,7 +1486,7 @@ server = app.server
 # 레이아웃 정의
 app.layout = html.Div([
     dcc.Graph(id='line-chart', figure=fig1),
-    dcc.Interval(id='graph-interval', interval=4000, n_intervals=0)  # 5초 간격
+    dcc.Interval(id='graph-interval', interval=10000, n_intervals=0)  # 5초 간격
 ])
 
 # 콜백 함수 정의
@@ -1205,7 +1501,7 @@ def update_graph(n):
 
 # 애플리케이션 실행
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8051)
 
 # '고양시': '#B0E0E6',
 # '덕양구': '#B0E0E6',
@@ -1213,6 +1509,3 @@ if __name__ == '__main__':
 # '일산서구': '#90EE90',
 # '6대광역시': '#FFB6C1',
 # '전국': '#FFB6C1',
-
-# 등락률 %표기
-# 애니메이션 삭제, 그래프별 3초
