@@ -1,63 +1,45 @@
+import pandas as pd
+
+apt_tx_indi_26_weeks = pd.read_csv('recent26_tx_indi.csv')
+apt_res_indi_26_weeks = pd.read_csv('recent26_res_indi.csv')
+
 import dash
 from dash import dcc, html
 import plotly.express as px
-from dash.dependencies import Input, Output
 import pandas as pd
-#데이터 불러오기
-apt_tx_indi = pd.read_csv('tx_indi.csv')
-apt_res_indi = pd.read_csv('res_indi.csv')
+from dash.dependencies import Input, Output
 
-#데이터를 최근 26주만 남겨주기
-apt_tx_indi_sort = apt_tx_indi.sort_values(by='WRTTIME_IDTFR_ID', ascending=False)
-recent_26_weeks = apt_tx_indi_sort['WRTTIME_IDTFR_ID'].drop_duplicates().head(26)
-apt_tx_indi_26_weeks = apt_tx_indi[apt_tx_indi['WRTTIME_IDTFR_ID'].isin(recent_26_weeks)]
-apt_res_indi_sort = apt_res_indi.sort_values(by='WRTTIME_IDTFR_ID', ascending=False)
-recent_26_weeks_res = apt_res_indi_sort['WRTTIME_IDTFR_ID'].drop_duplicates().head(26)
-apt_res_indi_26_weeks = apt_res_indi[apt_res_indi['WRTTIME_IDTFR_ID'].isin(recent_26_weeks_res)]
-
-
-
-# 데이터 복사
+# 데이터 전처리
 goyang_monthly_tx = apt_tx_indi_26_weeks.copy()
 goyang_monthly_res = apt_res_indi_26_weeks.copy()
 
-# 'CLS_NM' 열에서 우리가 활용한 지역구들만 필터링
+# 'CLS_NM' 열에서 특정 값이 있는 행들만 필터링
 '''앞 8개 그래프 : 매매가격지수 그래프'''
-filtered_data1 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['전국', '고양시'])]
-filtered_data2 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['6대광역시', '고양시'])]
-filtered_data3 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['전국', '덕양구', '일산동구', '일산서구'])]
-filtered_data4 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['6대광역시', '덕양구', '일산동구', '일산서구'])]
+filtered_data1 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['전국', '서울'])]
+filtered_data2 = goyang_monthly_tx[goyang_monthly_tx['CLS_NM'].isin(['6대광역시', '서울'])]
 '''뒤 8개 그래프 : 전세가격지수 그래프'''
-filtered_data5 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['전국', '고양시'])]
-filtered_data6 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광역시', '고양시'])]
-filtered_data7 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['전국', '덕양구', '일산동구', '일산서구'])]
-filtered_data8 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광역시', '덕양구', '일산동구', '일산서구'])]
+filtered_data5 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['전국', '서울'])]
+filtered_data6 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광역시', '서울'])]
 
-#x축 표기 위한 기간 단위 변환 함수
 def convert_to_year_week(week_code):
     year = int(week_code[:4])
     week = int(week_code[4:])
     return f'{year}년 {week}주차'
 
-#x축 표기 위한 기간 단위 변환을 각 데이터들에 적용
 filtered_data1['WRTTIME_IDTFR_ID'] = filtered_data1['WRTTIME_IDTFR_ID'].astype(str)
 filtered_data1['formatted_week'] = filtered_data1['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
 filtered_data2['WRTTIME_IDTFR_ID'] = filtered_data2['WRTTIME_IDTFR_ID'].astype(str)
 filtered_data2['formatted_week'] = filtered_data2['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
-filtered_data3['WRTTIME_IDTFR_ID'] = filtered_data3['WRTTIME_IDTFR_ID'].astype(str)
-filtered_data3['formatted_week'] = filtered_data3['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
-filtered_data4['WRTTIME_IDTFR_ID'] = filtered_data4['WRTTIME_IDTFR_ID'].astype(str)
-filtered_data4['formatted_week'] = filtered_data4['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+
 filtered_data5['WRTTIME_IDTFR_ID'] = filtered_data5['WRTTIME_IDTFR_ID'].astype(str)
 filtered_data5['formatted_week'] = filtered_data5['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
 filtered_data6['WRTTIME_IDTFR_ID'] = filtered_data6['WRTTIME_IDTFR_ID'].astype(str)
 filtered_data6['formatted_week'] = filtered_data6['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
-filtered_data7['WRTTIME_IDTFR_ID'] = filtered_data7['WRTTIME_IDTFR_ID'].astype(str)
-filtered_data7['formatted_week'] = filtered_data7['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
-filtered_data8['WRTTIME_IDTFR_ID'] = filtered_data8['WRTTIME_IDTFR_ID'].astype(str)
-filtered_data8['formatted_week'] = filtered_data8['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+
 
 '''1번그래프 : 매매가격지수 고양시 전국 비교'''
+
+
 
 # y축 최솟값과 최댓값 계산
 y_min1 = filtered_data1['DTA_VAL'].min()
@@ -67,10 +49,10 @@ y_max_with_margin1 = y_max1 + (y_max1 * 0.01)
 
 # Plotly 그래프 생성
 fig1 = px.line(filtered_data1,
-               x='formatted_week', #그래프 x축 기준으로 할 열 지정
-               y='DTA_VAL', #그래프 y축 기준으로 할 열 지정
+               x='formatted_week',
+               y='DTA_VAL',
                color='CLS_NM',
-               color_discrete_map={ #그래프 색상 지정
+               color_discrete_map={
                    '고양시': '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
@@ -101,7 +83,7 @@ fig1.update_layout(
     ),
     xaxis=dict(
         showline=True,
-        showticklabels=True, #x축 값 표시
+        showticklabels=True,
         tickfont=dict(size=15, family='Verdana', color='gray'),
         title=None,
         showgrid=True,  # 세로선 표시
@@ -109,19 +91,19 @@ fig1.update_layout(
     ),
     yaxis=dict(
         showline=True,
-        showticklabels=True, #y축 값 표시
+        showticklabels=True,
         title=None,
         tickfont=dict(size=25, family='Verdana', color='gray'),
         tickmode='array',  # 수동으로 tick 설정
         tickvals=tickvals1,  # y축 눈금 위치
         showgrid=True,  # 가로선 표시
         gridcolor='rgba(211, 211, 211, 0.5)',  # 연한 회색
-        gridwidth=1, # 가로선 굵기
+        gridwidth=1,
         range=[y_min_with_margin1, y_max_with_margin1]  # y축의 최솟값과 최댓값에 마진 추가
     ),
     width=1120,  # 그래프 너비 (16:9 비율로 설정)
     height=630,  # 그래프 높이 (16:9 비율로 설정)
-    plot_bgcolor='white',  # 그래프 배경색을 흰색
+    plot_bgcolor='white',  # 그래프 배경색을 깔끔한 흰색으로
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
     xaxis_tickformat='%Y년%주차',
     xaxis_tickangle=45,  # x축 눈금 기울기
@@ -1494,7 +1476,7 @@ server = app.server
 # 레이아웃 정의
 app.layout = html.Div([
     dcc.Graph(id='line-chart', figure=fig1),
-    dcc.Interval(id='graph-interval', interval=10000, n_intervals=0)  # 10초 간격
+    dcc.Interval(id='graph-interval', interval=10000, n_intervals=0)  # 5초 간격
 ])
 
 # 콜백 함수 정의
@@ -1503,7 +1485,7 @@ app.layout = html.Div([
     Input('graph-interval', 'n_intervals')
 )
 def update_graph(n):
-    # 그래프를 순환
+    # 3개의 그래프를 순환
     figures = [fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12, fig13, fig14, fig15, fig16]
     return figures[n % len(figures)]
 
