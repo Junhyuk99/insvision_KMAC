@@ -35,9 +35,9 @@ filtered_data8 = goyang_monthly_res[goyang_monthly_res['CLS_NM'].isin(['6대광�
 
 #x축 표기 위한 기간 단위 변환 함수
 def convert_to_year_week(week_code):
-    year = int(week_code[:4])
+    #year = int(week_code[:4])
     week = int(week_code[4:])
-    return f'{year}년 {week}주차'
+    return f'{week}주차'
 
 #x축 표기 위한 기간 단위 변환을 각 데이터들에 적용
 filtered_data1['WRTTIME_IDTFR_ID'] = filtered_data1['WRTTIME_IDTFR_ID'].astype(str)
@@ -123,7 +123,7 @@ fig1.update_layout(
     height=630,  # 그래프 높이 (16:9 비율로 설정)
     plot_bgcolor='white',  # 그래프 배경색을 흰색
     paper_bgcolor='white',  # 전체 배경색을 가벼운 회색
-    xaxis_tickformat='%Y년%주차',
+    xaxis_tickformat='%주차',
     xaxis_tickangle=45,  # x축 눈금 기울기
     margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
     annotations=[
@@ -233,9 +233,9 @@ filtered_data1_change['change_rate'] = (filtered_data1_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min1_change = filtered_data1_change['change_rate'].min()
-y_min_with_margin1_change = y_min1_change - (abs(y_min1_change) * 2)
+y_min_with_margin1_change = y_min1_change - 0.2
 y_max1_change = filtered_data1_change['change_rate'].max()
-y_max_with_margin1_change = y_max1_change + (abs(y_max1_change) * 1)
+y_max_with_margin1_change = y_max1_change + 0.2
 
 # Plotly 그래프 생성
 fig3 = px.line(filtered_data1_change,
@@ -326,9 +326,9 @@ filtered_data2_change['change_rate'] = (filtered_data2_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min2_change = filtered_data2_change['change_rate'].min()
-y_min_with_margin2_change = y_min2_change - (abs(y_min2_change) * 2)
+y_min_with_margin2_change = y_min2_change - 0.2
 y_max2_change = filtered_data2_change['change_rate'].max()
-y_max_with_margin2_change = y_max2_change + (abs(y_max2_change) * 1)
+y_max_with_margin2_change = y_max2_change + 0.2
 
 # Plotly 그래프 생성
 fig4 = px.line(filtered_data2_change,
@@ -591,9 +591,9 @@ filtered_data3_change['change_rate'] = (filtered_data3_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min3_change = filtered_data3_change['change_rate'].min()
-y_min_with_margin3_change = y_min3_change - (abs(y_min3_change) * 1)
+y_min_with_margin3_change = y_min3_change - 0.2
 y_max3_change = filtered_data3_change['change_rate'].max()
-y_max_with_margin3_change = y_max3_change + (abs(y_max3_change) * 1)
+y_max_with_margin3_change = y_max3_change + 0.2
 
 # Plotly 그래프 생성
 fig7 = px.line(filtered_data3_change,
@@ -686,9 +686,9 @@ filtered_data4_change['change_rate'] = (filtered_data4_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min4_change = filtered_data4_change['change_rate'].min()
-y_min_with_margin4_change = y_min4_change - (abs(y_min4_change) * 1)
+y_min_with_margin4_change = y_min4_change - 0.2
 y_max4_change = filtered_data4_change['change_rate'].max()
-y_max_with_margin4_change = y_max4_change + (abs(y_max4_change) * 1)
+y_max_with_margin4_change = y_max4_change + 0.2
 
 # Plotly 그래프 생성
 fig8 = px.line(filtered_data4_change,
@@ -950,7 +950,7 @@ filtered_data5_change['change_rate'] = (filtered_data5_change['DTA_VAL'] - filte
 y_min5_change = filtered_data5_change['change_rate'].min()
 y_min_with_margin5_change = y_min5_change - 0.2
 y_max5_change = filtered_data5_change['change_rate'].max()
-y_max_with_margin5_change = y_max5_change + 0.1
+y_max_with_margin5_change = y_max5_change + 0.2
 
 # Plotly 그래프 생성
 fig11 = px.line(filtered_data5_change,
@@ -1041,9 +1041,9 @@ filtered_data6_change['change_rate'] = (filtered_data6_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min6_change = filtered_data6_change['change_rate'].min()
-y_min_with_margin6_change = y_min6_change - 0.1
+y_min_with_margin6_change = y_min6_change - 0.2
 y_max6_change = filtered_data6_change['change_rate'].max()
-y_max_with_margin6_change = y_max6_change + 0.1
+y_max_with_margin6_change = y_max6_change + 0.2
 
 # Plotly 그래프 생성
 fig12 = px.line(filtered_data6_change,
@@ -1306,9 +1306,9 @@ filtered_data7_change['change_rate'] = (filtered_data7_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min7_change = filtered_data7_change['change_rate'].min()
-y_min_with_margin7_change = y_min7_change - 0.3
+y_min_with_margin7_change = y_min7_change - 0.2
 y_max7_change = filtered_data7_change['change_rate'].max()
-y_max_with_margin7_change = y_max7_change + 0.15
+y_max_with_margin7_change = y_max7_change + 0.2
 
 # Plotly 그래프 생성
 fig15 = px.line(filtered_data7_change,
@@ -1401,9 +1401,9 @@ filtered_data8_change['change_rate'] = (filtered_data8_change['DTA_VAL'] - filte
 
 # y축 최솟값과 최댓값 계산
 y_min8_change = filtered_data8_change['change_rate'].min()
-y_min_with_margin8_change = y_min8_change - 0.3
+y_min_with_margin8_change = y_min8_change - 0.2
 y_max8_change = filtered_data8_change['change_rate'].max()
-y_max_with_margin8_change = y_max8_change + 0.15
+y_max_with_margin8_change = y_max8_change + 0.2
 
 # Plotly 그래프 생성
 fig16 = px.line(filtered_data8_change,
@@ -1509,4 +1509,4 @@ def update_graph(n):
 
 # 애플리케이션 실행
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8051)
+    app.run_server(debug=True)
