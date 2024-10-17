@@ -407,7 +407,7 @@ for cls_name in filtered_data1_change['CLS_NM'].unique():
     fig3.add_annotation(
         x=max_row['formatted_week'],
         y=max_row['change_rate'],
-        text=f"{max_row['change_rate']:.2f}",
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -419,7 +419,7 @@ for cls_name in filtered_data1_change['CLS_NM'].unique():
     fig3.add_annotation(
         x=min_row['formatted_week'],
         y=min_row['change_rate'],
-        text=f"{min_row['change_rate']:.2f}",
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -534,7 +534,7 @@ for cls_name in filtered_data2_change['CLS_NM'].unique():
     fig4.add_annotation(
         x=max_row['formatted_week'],
         y=max_row['change_rate'],
-        text=f"{max_row['change_rate']:.2f}",
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -546,7 +546,7 @@ for cls_name in filtered_data2_change['CLS_NM'].unique():
     fig4.add_annotation(
         x=min_row['formatted_week'],
         y=min_row['change_rate'],
-        text=f"{min_row['change_rate']:.2f}",
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -899,14 +899,14 @@ for cls_name in filtered_data3_change['CLS_NM'].unique():
     cls_data = filtered_data3_change[filtered_data3_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig7.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -917,8 +917,8 @@ for cls_name in filtered_data3_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig7.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1029,14 +1029,14 @@ for cls_name in filtered_data4_change['CLS_NM'].unique():
     cls_data = filtered_data4_change[filtered_data4_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig8.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1047,8 +1047,8 @@ for cls_name in filtered_data4_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig8.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1391,14 +1391,14 @@ for cls_name in filtered_data5_change['CLS_NM'].unique():
     cls_data = filtered_data5_change[filtered_data5_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig11.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1409,8 +1409,8 @@ for cls_name in filtered_data5_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig11.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1518,14 +1518,14 @@ for cls_name in filtered_data6_change['CLS_NM'].unique():
     cls_data = filtered_data6_change[filtered_data6_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig12.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1536,8 +1536,8 @@ for cls_name in filtered_data6_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig12.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1890,14 +1890,14 @@ for cls_name in filtered_data7_change['CLS_NM'].unique():
     cls_data = filtered_data7_change[filtered_data7_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig15.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -1908,8 +1908,8 @@ for cls_name in filtered_data7_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig15.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -2020,14 +2020,14 @@ for cls_name in filtered_data8_change['CLS_NM'].unique():
     cls_data = filtered_data8_change[filtered_data8_change['CLS_NM'] == cls_name]
 
     # 최대값과 최소값 찾기
-    max_row = cls_data.loc[cls_data['DTA_VAL'].idxmax()]
-    min_row = cls_data.loc[cls_data['DTA_VAL'].idxmin()]
+    max_row = cls_data.loc[cls_data['change_rate'].idxmax()]
+    min_row = cls_data.loc[cls_data['change_rate'].idxmin()]
 
     # 최대값에 주석 추가
     fig16.add_annotation(
         x=max_row['formatted_week'],
-        y=max_row['DTA_VAL'],
-        text=f"{max_row['DTA_VAL']:.2f}",
+        y=max_row['change_rate'],
+        text=f"{max_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -2038,8 +2038,8 @@ for cls_name in filtered_data8_change['CLS_NM'].unique():
     # 최소값에 주석 추가
     fig16.add_annotation(
         x=min_row['formatted_week'],
-        y=min_row['DTA_VAL'],
-        text=f"{min_row['DTA_VAL']:.2f}",
+        y=min_row['change_rate'],
+        text=f"{min_row['change_rate']:.2f}%",
         showarrow=False,
         # textangle=-25,  # 오른쪽으로 기울이기
         xanchor='center',  # 텍스트의 시작점을 왼쪽으로 설정
@@ -2167,4 +2167,4 @@ def update_graph(n):
 
 # 애플리케이션 실행
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8051)
