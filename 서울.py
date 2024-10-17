@@ -38,6 +38,11 @@ filtered_data9 = seoul_weekly_tx[seoul_weekly_tx['CLS_NM'].isin(
      '구로구', '금천구', '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'])]
 filtered_data9 = filtered_data9[~((filtered_data9['CLS_NM'] == '중구') & (filtered_data9['CLS_ID'] != 50044))]
 filtered_data9 = filtered_data9[~((filtered_data9['CLS_NM'] == '강서구') & (filtered_data9['CLS_ID'] != 50061))]
+filtered_data10 = seoul_weekly_res[seoul_weekly_res['CLS_NM'].isin(
+    ['종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구', '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구',
+     '구로구', '금천구', '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'])]
+filtered_data10 = filtered_data10[~((filtered_data10['CLS_NM'] == '중구') & (filtered_data10['CLS_ID'] != 50044))]
+filtered_data10 = filtered_data10[~((filtered_data10['CLS_NM'] == '강서구') & (filtered_data10['CLS_ID'] != 50061))]
 
 
 # x축 표기 위한 기간 단위 변환 함수
@@ -66,6 +71,8 @@ filtered_data8['WRTTIME_IDTFR_ID'] = filtered_data8['WRTTIME_IDTFR_ID'].astype(s
 filtered_data8['formatted_week'] = filtered_data8['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
 filtered_data9['WRTTIME_IDTFR_ID'] = filtered_data9['WRTTIME_IDTFR_ID'].astype(str)
 filtered_data9['formatted_week'] = filtered_data9['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
+filtered_data10['WRTTIME_IDTFR_ID'] = filtered_data10['WRTTIME_IDTFR_ID'].astype(str)
+filtered_data10['formatted_week'] = filtered_data10['WRTTIME_IDTFR_ID'].apply(convert_to_year_week)
 
 '''1번그래프 : 매매가격지수 서울 전국 비교'''
 
@@ -2141,6 +2148,99 @@ for i in range(len(latest_data)):
         yshift=10  # 바 위에 위치하도록 y축을 약간 위로 이동
     )
 
+'''18번그래프 : 서울시 전체 구 최근 주차 전세가격지수'''
+# 최신 주차 데이터 필터링
+latest_week2 = filtered_data10['formatted_week'].max()  # 가장 최근 주차 찾기
+latest_data2 = filtered_data10[filtered_data10['formatted_week'] == latest_week2]  # 해당 주차 데이터 필터링
+
+# y축 최댓값 계산
+y_max10 = filtered_data10['DTA_VAL'].max()
+
+# 색상 목록 정의 (25개 색상)
+colors = ['#E74C3C', '#F39C12', '#F1C40F', '#2ECC71', '#1ABC9C', '#3498DB', '#2980B9',
+          '#9B59B6', '#E91E63', '#D50032', '#C0392B', '#D4AF37', '#FFA07A', '#8FBC8F', '#00CED1',
+          '#4682B4', '#9370DB', '#FFB6C1', '#FFE4C4', '#B0E0E6', '#AFEEEE', '#FF69B4', '#A0522D',
+          '#FF6347', '#B22222', '#DAA520', ]
+
+# 서울시 구별 매매가격지수 바 차트 생성
+fig18 = px.bar(latest_data2,
+               x='CLS_NM',  # 구 이름
+               y='DTA_VAL',  # 매매가격지수
+               color='CLS_NM',  # 구에 따른 색상 구분
+               # labels={'CLS_NM': '서울시 구', 'DTA_VAL': '매매가격지수'},  # 라벨 설정
+               title=f"서울시 각 구의 최근 주차 전세가격지수 ({latest_week2})",  # 그래프 제목
+               )
+
+# 강조하고자 하는 구 이름 지정 (예: 중구)
+highlight_bar = '동작구'
+
+# 각 바의 색상 및 외곽선 설정
+for i, bar in enumerate(fig18.data):
+    bar.marker.color = colors[i % len(colors)]  # 색상 지정
+    for j, x_value in enumerate(bar.x):
+        if x_value == highlight_bar:
+            bar.marker.line.width = 5  # 외곽선 두께 설정
+            bar.marker.line.color = '#FF4500'  # 외곽선 색상 (주황색)
+        else:
+            bar.marker.line.width = 0  # 다른 바는 외곽선 없음
+
+# 그래프 레이아웃 업데이트 (스타일 설정)
+fig18.update_layout(
+    title={
+        'font': {'size': 25, 'family': 'Montserrat', 'color': '#2B3E50'},
+        'x': 0.5,  # 제목을 중앙에 배치
+        'xanchor': 'center',
+    },
+    xaxis=dict(
+        title=None,
+        tickfont=dict(size=17, family='Verdana', color='gray'),
+        showline=True,
+        showgrid=False  # 세로선 제거
+    ),
+    yaxis=dict(
+        title=None,
+        showticklabels=True,
+        tickfont=dict(size=25, family='Verdana', color='gray'),
+        showline=True,
+        showgrid=True,  # 가로선 표시
+        gridwidth=1,
+        range=[70, y_max10 + 5],  # y축의 최솟값과 최댓값에 마진 추가
+        gridcolor='rgba(211, 211, 211, 0.5)'  # 연한 회색 가로선
+    ),
+    bargap=0.3,  # 바 간의 간격 (0~1 사이 값)
+    plot_bgcolor='white',  # 그래프 배경색
+    paper_bgcolor='white',  # 전체 배경색
+    width=1120,  # 그래프 너비
+    height=630,  # 그래프 높이
+    xaxis_tickangle=45,  # x축 눈금 기울기
+    margin=dict(l=40, r=40, t=80, b=60),  # 여백 조정
+    showlegend=False,
+    annotations=[
+        dict(
+            text="출처:한국부동산원 부동산통계정보",
+            x=1,  # 오른쪽 끝으로 배치
+            y=0,  # 아래쪽 끝으로 배치
+            xref="paper",  # x축 기준으로 paper 사용
+            yref="paper",  # y축 기준으로 paper 사용
+            xanchor='right',  # 오른쪽 끝에 맞춤
+            yanchor='bottom',  # 아래쪽 끝에 맞춤
+            showarrow=False,  # 화살표 없이 텍스트만 표시
+            font=dict(size=12, color="black")  # 작은 회색 글씨로 표시
+        )
+    ]
+)
+
+# 각 바 위에 데이터 레이블 추가
+for i in range(len(latest_data2)):
+    fig18.add_annotation(
+        x=latest_data2['CLS_NM'].iloc[i],  # x축 (구 이름)
+        y=latest_data2['DTA_VAL'].iloc[i],  # y축 (매매가격지수)
+        text=f"{latest_data2['DTA_VAL'].iloc[i]:.2f}",  # 값 표시, 소수점 2자리까지
+        showarrow=False,
+        font=dict(size=13, color='black'),  # 폰트 크기와 색상
+        yshift=10  # 바 위에 위치하도록 y축을 약간 위로 이동
+    )
+
 # Dash 애플리케이션 초기화
 app = dash.Dash(__name__)
 server = app.server
@@ -2160,8 +2260,8 @@ app.layout = html.Div([
 def update_graph(n):
     # 그래프를 순환
     figures = [fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10,
-               fig11, fig12, fig13, fig14, fig15, fig16, fig17]
-    # figures=[fig17]
+               fig11, fig12, fig13, fig14, fig15, fig16, fig17, fig18]
+    # figures=[fig18]
     return figures[n % len(figures)]
 
 
