@@ -1,1 +1,1 @@
-web: gunicorn final_all_indi_week_share2:server
+web: gunicorn 서울:server
