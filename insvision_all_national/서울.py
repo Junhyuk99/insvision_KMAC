@@ -2075,7 +2075,7 @@ fig17 = px.bar(latest_data,
                y='DTA_VAL',  # 매매가격지수
                color='CLS_NM',  # 구에 따른 색상 구분
                # labels={'CLS_NM': '서울시 구', 'DTA_VAL': '매매가격지수'},  # 라벨 설정
-               title=f"서울시 각 구의 최근 주차 매매가격지수 ({latest_week})",  # 그래프 제목
+               title=f"서울시 구별 최근 주차 매매가격지수 ({latest_week})",  # 그래프 제목
                )
 
 # 강조하고자 하는 구 이름 지정 (예: 중구)
@@ -2168,7 +2168,7 @@ fig18 = px.bar(latest_data2,
                y='DTA_VAL',  # 매매가격지수
                color='CLS_NM',  # 구에 따른 색상 구분
                # labels={'CLS_NM': '서울시 구', 'DTA_VAL': '매매가격지수'},  # 라벨 설정
-               title=f"서울시 각 구의 최근 주차 전세가격지수 ({latest_week2})",  # 그래프 제목
+               title=f"서울시 구별 최근 주차 전세가격지수 ({latest_week2})",  # 그래프 제목
                )
 
 # 강조하고자 하는 구 이름 지정 (예: 중구)
