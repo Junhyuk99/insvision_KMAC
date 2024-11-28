@@ -7,6 +7,8 @@ import pandas as pd
 '''!시/도이름을넣어주세요 에 시각화를 원하는 시의 이름을 넣어주시면 됩니다.
 정확한 시/도의 이름은 데이터파일의 CLS_NM 열에서 확인 가능합니다.'''
 
+city = '!시/도이름을넣어주세요'
+
 # 데이터 불러오기
 apt_tx_indi = pd.read_csv('tx_indi.csv')
 apt_res_indi = pd.read_csv('res_indi.csv')
@@ -25,11 +27,11 @@ seoul_weekly_res = apt_res_indi_26_weeks.copy()
 
 # 'CLS_NM' 열에서 우리가 활용한 지역구들만 필터링
 '''앞 8개 그래프 : 매매가격지수 그래프'''
-filtered_data1 = seoul_weekly_tx[seoul_weekly_tx['CLS_NM'].isin(['전국', '!시/도이름을넣어주세요'])]
-filtered_data2 = seoul_weekly_tx[seoul_weekly_tx['CLS_NM'].isin(['6대광역시', '!시/도이름을넣어주세요'])]
+filtered_data1 = seoul_weekly_tx[seoul_weekly_tx['CLS_NM'].isin(['전국', city])]
+filtered_data2 = seoul_weekly_tx[seoul_weekly_tx['CLS_NM'].isin(['6대광역시', city])]
 '''뒤 8개 그래프 : 전세가격지수 그래프'''
-filtered_data5 = seoul_weekly_res[seoul_weekly_res['CLS_NM'].isin(['전국', '!시/도이름을넣어주세요'])]
-filtered_data6 = seoul_weekly_res[seoul_weekly_res['CLS_NM'].isin(['6대광역시', '!시/도이름을넣어주세요'])]
+filtered_data5 = seoul_weekly_res[seoul_weekly_res['CLS_NM'].isin(['전국', city])]
+filtered_data6 = seoul_weekly_res[seoul_weekly_res['CLS_NM'].isin(['6대광역시', city])]
 
 
 # x축 표기 위한 기간 단위 변환 함수
@@ -63,7 +65,7 @@ fig1 = px.line(filtered_data1,
                y='DTA_VAL',  # 그래프 y축 기준으로 할 열 지정
                color='CLS_NM',
                color_discrete_map={  # 그래프 색상 지정
-                   '!시/도이름을넣어주세요': '#0047AB',
+                   city: '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
                },
@@ -180,7 +182,7 @@ fig2 = px.line(filtered_data2,
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
-                   '!시/도이름을넣어주세요': '#0047AB',
+                   city: '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
                },
@@ -302,7 +304,7 @@ fig3 = px.line(filtered_data1_change,
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
-                   '!시/도이름을넣어주세요': '#0047AB',
+                   city: '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
                },
@@ -429,7 +431,7 @@ fig4 = px.line(filtered_data2_change,
                y='change_rate',
                color='CLS_NM',
                color_discrete_map={
-                   '!시/도이름을넣어주세요': '#0047AB',
+                   city: '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
                },
@@ -552,7 +554,7 @@ fig9 = px.line(filtered_data5,
                y='DTA_VAL',
                color='CLS_NM',
                color_discrete_map={
-                   '!시/도이름을넣어주세요': '#0047AB',
+                   city: '#0047AB',
                    '6대광역시': '#D50032',
                    '전국': '#D50032',
                },
@@ -669,7 +671,7 @@ fig10 = px.line(filtered_data6,
                 y='DTA_VAL',
                 color='CLS_NM',
                 color_discrete_map={
-                    '!시/도이름을넣어주세요': '#0047AB',
+                    city: '#0047AB',
                     '6대광역시': '#D50032',
                     '전국': '#D50032',
                 },
@@ -792,7 +794,7 @@ fig11 = px.line(filtered_data5_change,
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
-                    '!시/도이름을넣어주세요': '#0047AB',
+                    city: '#0047AB',
                     '6대광역시': '#D50032',
                     '전국': '#D50032',
                 },
@@ -919,7 +921,7 @@ fig12 = px.line(filtered_data6_change,
                 y='change_rate',
                 color='CLS_NM',
                 color_discrete_map={
-                    '!시/도이름을넣어주세요': '#0047AB',
+                    city: '#0047AB',
                     '6대광역시': '#D50032',
                     '전국': '#D50032',
                 },
